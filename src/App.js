@@ -1,9 +1,9 @@
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useNavigate } from "react-router-dom";
 
-import Home from "./Home";
+import Login from "./Login";
 import CreatePost from "./CreatePost";
 import EditPost from "./EditPost";
-import Login from "./Login";
+import Home from "./Home";
 
 const App = () => {
   return (

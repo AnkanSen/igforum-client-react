@@ -4,6 +4,8 @@ import moment from "moment";
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
+import Navbar from "./Navbar";
+
 const Home = () => {
   const navigate = useNavigate();
 
@@ -49,30 +51,21 @@ const Home = () => {
     }
   };
 
-  const logoutHandler = () => {
-    localStorage.removeItem("x-auth-token");
-    navigate("/login");
-  };
-
-  const createPostHandler = () => {
-    navigate("/post");
-  };
-
   // Calling when component loads
   useEffect(() => {
     getPosts();
   }, []);
 
   return (
-    <div className="home">
-      <button onClick={logoutHandler}>Logout</button>
-      <br></br>
-      <button onClick={createPostHandler}>Create New Event</button>
-      <h1> Your Posts </h1>
-      {postsData.map((item, i) => {
-        return <Posts cardId={i} {...item} deletePost={deletePost} />;
-      })}
-    </div>
+    <>
+      <Navbar />
+      <div className="home">
+        <h1> Your Posts </h1>
+        {postsData.map((item, i) => {
+          return <Posts cardId={i} {...item} deletePost={deletePost} />;
+        })}
+      </div>
+    </>
   );
 };
 
