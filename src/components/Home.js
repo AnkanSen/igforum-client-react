@@ -2,7 +2,7 @@ import axios from "axios";
 import moment from "moment";
 
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, redirect } from "react-router-dom";
 
 import Navbar from "../components/Navbar";
 
@@ -53,7 +53,29 @@ const Home = () => {
 
   // Calling when component loads
   useEffect(() => {
-    getPosts();
+    async function verify() {
+      try {
+        const verifyToken = await axios.get(
+          "http://localhost:5000/api/verify",
+          {
+            headers: {
+              "x-auth-token": `${localStorage.getItem("x-auth-token")}`,
+            },
+          }
+        );
+
+        await getPosts();
+      } catch (err) {
+        navigate("/login");
+        throw err;
+      }
+    }
+
+    try {
+      verify();
+    } catch (err) {
+      console.log(err);
+    }
   }, []);
 
   return (
@@ -62,7 +84,9 @@ const Home = () => {
       <div className="home">
         <h1> Your Posts </h1>
         {postsData.map((item, i) => {
-          return <Posts cardId={i} {...item} deletePost={deletePost} />;
+          return (
+            <Posts key={item} cardId={i} {...item} deletePost={deletePost} />
+          );
         })}
       </div>
     </>
@@ -88,7 +112,7 @@ const Posts = (props) => {
         id: props._id,
         title: props.title,
         body: props.body,
-        picPath: props.picPath,
+        picPath: props.img,
         duration: props.duration,
         venue: props.venue,
         date: props.date,
@@ -110,7 +134,9 @@ const Posts = (props) => {
         <li>Body: {props.body}</li>
         <li>Likes: {props.likes}</li>
         <li>Registrants: {props.registrants}</li>
-        <li>Pic path: {props.img}</li>
+        <li>
+          Pic <img src={`http://localhost:5000/${props.img}`} />
+        </li>
         <li>Is Updated: {props.updated.toString()}</li>
         <li>Venue: {props.venue}</li>
         <li>Date: {moment(props.date).utc().format("MMMM Do YYYY, h:mm a")}</li>

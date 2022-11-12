@@ -1,70 +1,75 @@
-import { useNavigate } from "react-router-dom";
-import { GoogleLogin, GoogleOAuthProvider } from "@react-oauth/google";
-
 import axios from "axios";
+import { redirect, useNavigate } from "react-router-dom";
+import { GoogleLogin, GoogleOAuthProvider } from "@react-oauth/google";
+import { useEffect } from "react";
 
-import { useEffect, useState } from "react";
-
-async function loginSuccess(res) {
-  console.log(res);
-  axios
-    .get("https://www.googleapis.com/oauth2/v1/tokeninfo", {
-      params: { id_token: `${res.credential}` },
-    })
-    .then((google_res) => {
-      if (google_res.status === 200) {
-        axios
-          .post("http://localhost:5000/api/auth/login", {
-            email: `${google_res.data.email}`,
-            isOrganization: true,
-          })
-          .then((response) => {
-            if (response.status === 200) {
-              localStorage.setItem(
-                "x-auth-token",
-                `${response.data.accessToken}`
-              );
-              window.location.reload(false);
-              return 1;
-            }
-          });
+const setToken = async (res) => {
+  try {
+    const googleRes = await axios.get(
+      "https://www.googleapis.com/oauth2/v1/tokeninfo",
+      {
+        params: { id_token: `${res.credential}` },
       }
-    })
-    .catch((google_err) => {
-      console.log(google_err);
-    });
-}
+    );
 
-const loginFailure = (err) => {
-  console.log(err);
+    try {
+      const response = await axios.post(
+        "http://localhost:5000/api/auth/login",
+        {
+          email: `${googleRes.data.email}`,
+          isOrganization: true,
+        }
+      );
+
+      localStorage.setItem("x-auth-token", response.data.accessToken);
+    } catch (err) {
+      throw err;
+    }
+  } catch (err) {
+    throw err;
+  }
 };
 
 const Login = () => {
   const navigate = useNavigate();
 
-  const [loginMsg, setLoginMsg] = useState("");
-  const [tokenVerify, setTokenVerify] = useState(false);
+  const onSuccess = async (res) => {
+    try {
+      await setToken(res);
+      navigate("/");
+    } catch (err) {
+      redirect("/login");
+    }
+  };
+
+  const onError = (err) => console.log(err);
 
   useEffect(() => {
-    try {
-      tokenVerify();
-    } catch (err) {
-      console.log(err);
-      setLoginMsg("[/login]: Server Error, Try logging in Again");
+    async function verify() {
+      try {
+        const verifyToken = await axios.get(
+          "http://localhost:5000/api/verify",
+          {
+            headers: {
+              "x-auth-token": `${localStorage.getItem("x-auth-token")}`,
+            },
+          }
+        );
+        navigate("/");
+      } catch (err) {
+        redirect("/login");
+      }
     }
+    verify();
   }, []);
-
-  const onSuccess = (res) => {
-    loginSuccess(res).then(navigate("/"));
-  };
 
   return (
     <div>
       <h1>Welcome To IG Forum Organization Panel</h1>
+      <br></br>
       <p> Sign In</p>
-      <h3>{loginMsg}</h3>
       <GoogleOAuthProvider clientId="686237414426-i403mqs4n53kj8n3e7m59nobp91dks41.apps.googleusercontent.com">
-        <GoogleLogin onSuccess={onSuccess} onError={loginFailure} />
+        <GoogleLogin onSuccess={onSuccess} onError={onError} />
       </GoogleOAuthProvider>
     </div>
   );

@@ -1,6 +1,6 @@
 import axios from "axios";
 import moment from "moment";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
 import Navbar from "../components/Navbar";
@@ -10,26 +10,35 @@ const EditPost = () => {
   const navigate = useNavigate();
 
   const [details, setDetails] = useState({
-    title: "",
-    body: "",
-    picPath: "",
-    duration: "",
-    venue: "",
-    date: "",
+    title: state.title,
+    body: state.body,
+    picPath: state.picPath,
+    duration: state.duration,
+    venue: state.venue,
+    date: state.date,
   });
 
   const handleChange = (e) => {
     const newDetails = { ...details };
-    newDetails[e.target.name] = e.target.value;
+    if (e.target.name === "picPath") {
+      newDetails[e.target.name] = e.target.files[0];
+    } else {
+      newDetails[e.target.name] = e.target.value;
+    }
     setDetails(newDetails);
   };
 
   const handleSubmit = async (e) => {
     try {
       e.preventDefault();
+
+      const newFormData = new FormData();
+      newFormData.append("image", details.picPath);
+      newFormData.append("postDetails", JSON.stringify(details));
+
       const updatePost = await axios.put(
         `http://localhost:5000/api/posts/${state.id}`,
-        details,
+        newFormData,
         {
           headers: {
             "x-auth-token": `${localStorage.getItem("x-auth-token")}`,
@@ -37,16 +46,38 @@ const EditPost = () => {
         }
       );
 
-      console.log("Ls");
-
       if (updatePost) {
         alert("Post Updated");
         navigate("/");
       }
     } catch (err) {
-      console.log(err.response.data.msg);
+      console.log(err);
     }
   };
+
+  useEffect(() => {
+    async function verify() {
+      try {
+        const verifyToken = await axios.get(
+          "http://localhost:5000/api/verify",
+          {
+            headers: {
+              "x-auth-token": `${localStorage.getItem("x-auth-token")}`,
+            },
+          }
+        );
+      } catch (err) {
+        navigate("/login");
+        throw err;
+      }
+    }
+
+    try {
+      verify();
+    } catch (err) {
+      console.log(err);
+    }
+  }, []);
 
   return (
     <>
@@ -60,7 +91,7 @@ const EditPost = () => {
             <input
               type="text"
               name="title"
-              defaultValue={state.title}
+              defaultValue={details.title}
               placeholder="Enter title"
               onChange={handleChange}
             />
@@ -71,19 +102,20 @@ const EditPost = () => {
             <textarea
               id="body"
               name="body"
-              defaultValue={state.body}
+              defaultValue={details.body}
               rows="4"
               cols="50"
               onChange={handleChange}
             ></textarea>
           </div>
           <br />
+          <h1>Old Image</h1>
+          <img src={"http://localhost:5000/" + details.picPath}></img>
           <div className="field">
             <label>Upload Poster: </label>
             <input
-              type="text"
+              type="file"
               name="picPath"
-              defaultValue={state.picPath}
               placeholder="Enter pic path"
               onChange={handleChange}
             />
@@ -94,7 +126,7 @@ const EditPost = () => {
             <input
               type="text"
               name="duration"
-              defaultValue={state.duration}
+              defaultValue={details.duration}
               placeholder="Enter duration"
               onChange={handleChange}
             />
@@ -105,7 +137,7 @@ const EditPost = () => {
             <input
               type="text"
               name="venue"
-              defaultValue={state.venue}
+              defaultValue={details.venue}
               placeholder="Enter venue"
               onChange={handleChange}
             />
@@ -116,7 +148,7 @@ const EditPost = () => {
             <input
               type="datetime-local"
               name="date"
-              defaultValue={moment(state.date).format("YYYY-MM-DDTkk:mm")}
+              defaultValue={moment(details.date).format("YYYY-MM-DDTkk:mm")}
               placeholder="Enter title"
               onChange={handleChange}
             />
