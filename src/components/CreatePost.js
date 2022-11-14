@@ -1,4 +1,5 @@
 import axios from "axios";
+import moment from "moment";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -29,10 +30,14 @@ const CreatePost = () => {
   const handleSubmit = async (e) => {
     try {
       e.preventDefault();
+      console.log(details);
 
       const newFormData = new FormData();
+
       newFormData.append("image", details.picPath);
       newFormData.append("postDetails", JSON.stringify(details));
+
+      console.log(newFormData.get("postDetails"));
 
       const createPost = await axios.post(
         "http://localhost:5000/api/posts/",
@@ -83,7 +88,7 @@ const CreatePost = () => {
       <div className="createPostDiv">
         <form
           className="createPostForm"
-          enctype="multipart/form-data"
+          encType="multipart/form-data"
           method="post"
           onSubmit={handleSubmit}
         >

@@ -1,21 +1,22 @@
 import axios from "axios";
-import moment from "moment";
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
 import Navbar from "../components/Navbar";
+import moment from "moment";
 
 const EditPost = () => {
-  const { state } = useLocation();
   const navigate = useNavigate();
 
+  const { state } = useLocation();
+
   const [details, setDetails] = useState({
-    title: state.title,
-    body: state.body,
-    picPath: state.picPath,
-    duration: state.duration,
-    venue: state.venue,
-    date: state.date,
+    title: "",
+    body: "",
+    picPath: "",
+    duration: "",
+    venue: "",
+    date: "",
   });
 
   const handleChange = (e) => {
@@ -31,12 +32,14 @@ const EditPost = () => {
   const handleSubmit = async (e) => {
     try {
       e.preventDefault();
+      console.log(details);
 
       const newFormData = new FormData();
+
       newFormData.append("image", details.picPath);
       newFormData.append("postDetails", JSON.stringify(details));
 
-      const updatePost = await axios.put(
+      const editPost = await axios.put(
         `http://localhost:5000/api/posts/${state.id}`,
         newFormData,
         {
@@ -46,8 +49,8 @@ const EditPost = () => {
         }
       );
 
-      if (updatePost) {
-        alert("Post Updated");
+      if (editPost) {
+        alert("Post Edited");
         navigate("/");
       }
     } catch (err) {
@@ -83,17 +86,22 @@ const EditPost = () => {
     <>
       <Navbar />
       <div className="createPostDiv">
-        <form className="createPostForm" onSubmit={handleSubmit}>
-          <h1>Create a new Event</h1>
+        <form
+          className="createPostForm"
+          encType="multipart/form-data"
+          method="post"
+          onSubmit={handleSubmit}
+        >
+          <h1>Edit Event</h1>
           <br />
           <div className="field">
             <label>Title: </label>
             <input
               type="text"
               name="title"
-              defaultValue={details.title}
               placeholder="Enter title"
               onChange={handleChange}
+              defaultValue={state.title}
             />
           </div>
           <br />
@@ -102,17 +110,15 @@ const EditPost = () => {
             <textarea
               id="body"
               name="body"
-              defaultValue={details.body}
               rows="4"
               cols="50"
               onChange={handleChange}
+              defaultValue={state.body}
             ></textarea>
           </div>
           <br />
-          <h1>Old Image</h1>
-          <img src={"http://localhost:5000/" + details.picPath}></img>
           <div className="field">
-            <label>Upload Poster: </label>
+            <label>Upload Post: </label>
             <input
               type="file"
               name="picPath"
@@ -126,9 +132,9 @@ const EditPost = () => {
             <input
               type="text"
               name="duration"
-              defaultValue={details.duration}
               placeholder="Enter duration"
               onChange={handleChange}
+              defaultValue={state.duration}
             />
           </div>
           <br />
@@ -137,9 +143,9 @@ const EditPost = () => {
             <input
               type="text"
               name="venue"
-              defaultValue={details.venue}
               placeholder="Enter venue"
               onChange={handleChange}
+              defaultValue={state.venue}
             />
           </div>
           <br />
@@ -148,9 +154,11 @@ const EditPost = () => {
             <input
               type="datetime-local"
               name="date"
-              defaultValue={moment(details.date).format("YYYY-MM-DDTkk:mm")}
               placeholder="Enter title"
               onChange={handleChange}
+              defaultValue={moment(state.date)
+                .local()
+                .format("YYYY-MM-DDTkk:mm")}
             />
           </div>
           <br />

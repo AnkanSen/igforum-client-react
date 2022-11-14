@@ -139,7 +139,9 @@ const Posts = (props) => {
         </li>
         <li>Is Updated: {props.updated.toString()}</li>
         <li>Venue: {props.venue}</li>
-        <li>Date: {moment(props.date).utc().format("MMMM Do YYYY, h:mm a")}</li>
+        <li>
+          Date: {moment(props.date).local().format("MMMM Do YYYY, hh:mm a")}
+        </li>
         <li>Duration: {props.duration}</li>
       </ul>
       <br />

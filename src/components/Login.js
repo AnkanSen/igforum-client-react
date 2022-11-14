@@ -3,6 +3,8 @@ import { redirect, useNavigate } from "react-router-dom";
 import { GoogleLogin, GoogleOAuthProvider } from "@react-oauth/google";
 import { useEffect } from "react";
 
+import { ToastContainer, toast } from "react-toastify";
+
 const setToken = async (res) => {
   try {
     const googleRes = await axios.get(
