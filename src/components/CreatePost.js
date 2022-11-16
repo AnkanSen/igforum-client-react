@@ -156,6 +156,15 @@ const CreatePost = () => {
           </div>
           <br />
           <div className="field">
+            <label>WhatsApp Link: </label>
+            <input
+              type="text"
+              name="waLink"
+              placeholder="Enter the waLink"
+              onChange={handleChange}
+            />
+          </div>
+          <div className="field">
             <input type="submit" name="submit" />
           </div>
         </form>

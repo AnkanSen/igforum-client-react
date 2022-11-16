@@ -116,6 +116,7 @@ const Posts = (props) => {
         duration: props.duration,
         venue: props.venue,
         date: props.date,
+        waLink: props.waLink,
       },
     });
   };
@@ -143,6 +144,7 @@ const Posts = (props) => {
           Date: {moment(props.date).local().format("MMMM Do YYYY, hh:mm a")}
         </li>
         <li>Duration: {props.duration}</li>
+        <li>WhatsApp Link: {props.waLink}</li>
       </ul>
       <br />
       <button

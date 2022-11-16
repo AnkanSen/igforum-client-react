@@ -17,6 +17,7 @@ const EditPost = () => {
     duration: "",
     venue: "",
     date: "",
+    waLink: "",
   });
 
   const handleChange = (e) => {
@@ -146,6 +147,17 @@ const EditPost = () => {
               placeholder="Enter venue"
               onChange={handleChange}
               defaultValue={state.venue}
+            />
+          </div>
+          <br />
+          <div className="field">
+            <label>WhatsApp Link: </label>
+            <input
+              type="text"
+              name="waLink"
+              placeholder="Enter the waLink"
+              onChange={handleChange}
+              defaultValue={state.waLink}
             />
           </div>
           <br />
