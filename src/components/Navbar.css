@@ -1,0 +1,39 @@
+.dict {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+  font-family: 'Roboto', sans-serif;
+  font-weight: 100;
+}
+
+.nav {
+  background: #000;
+  height: 60px; 
+  width: fit-content;
+
+}
+
+.nav li {
+  display: inline-block;
+  list-style: none;
+  height: 60px; 
+  line-height: 60px; 
+  padding: 0 40px;
+  cursor: pointer;
+  color: #fff;
+
+}
+
+
+.nav li:hover {
+  background: red;
+  transition: background .3s;
+}
+
+.nav-link {
+  color: #fff;
+  text-decoration: none;
+}

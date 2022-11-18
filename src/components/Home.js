@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { useNavigate, redirect } from "react-router-dom";
 
 import Navbar from "../components/Navbar";
+import "./Home.css";
 
 const Home = () => {
   const navigate = useNavigate();
@@ -82,7 +83,9 @@ const Home = () => {
     <>
       <Navbar />
       <div className="home">
-        <h1> Your Posts </h1>
+        <div className="headingDiv">
+          <h1 className="heading"> Your Posts </h1>
+        </div>
         {postsData.map((item, i) => {
           return (
             <Posts key={item} cardId={i} {...item} deletePost={deletePost} />
@@ -126,38 +129,49 @@ const Posts = (props) => {
   };
 
   return (
-    <div className="postCard" id={props.cardId}>
-      <ul>
-        <li>
-          <h1>Organization: {props.organization}</h1>
-        </li>
-        <li>Title: {props.title}</li>
-        <li>Body: {props.body}</li>
-        <li>Likes: {props.likes}</li>
-        <li>Registrants: {props.registrants}</li>
-        <li>
-          Pic <img src={`http://localhost:5000/${props.img}`} />
-        </li>
-        <li>Is Updated: {props.updated.toString()}</li>
-        <li>Venue: {props.venue}</li>
-        <li>
-          Date: {moment(props.date).local().format("MMMM Do YYYY, hh:mm a")}
-        </li>
-        <li>Duration: {props.duration}</li>
-        <li>WhatsApp Link: {props.waLink}</li>
-      </ul>
-      <br />
-      <button
-        onClick={() => {
-          if (window.confirm("Are you sure you want to delete") === true) {
-            props.deletePost(props._id, props.cardId);
-          }
-        }}
-      >
-        Delete Post
-      </button>
-      <button onClick={editButtonHandler}>Edit Post</button>
-      <button onClick={downloadButtonHandler}>Download Registrants</button>
+    <div className="divCard">
+      <div className="postCard" id={props.cardId}>
+        <div className="imgBox">
+          <img src={`http://localhost:5000/${props.img}`} />
+        </div>
+        <div className="details">
+          <div className="content">
+            <h1>
+              Organization:<br></br>
+              <span>{props.organization}</span>{" "}
+            </h1>
+            <ul>
+              <li></li>
+              <li>Title: {props.title}</li>
+              <li>Body: {props.body}</li>
+              <li>Likes: {props.likes}</li>
+              <li>Registrants: {props.registrants}</li>
+              <li>Is Updated: {props.updated.toString()}</li>
+              <li>Venue: {props.venue}</li>
+              <li>
+                Date:{" "}
+                {moment(props.date).local().format("MMMM Do YYYY, hh:mm a")}
+              </li>
+              <li>Duration: {props.duration}</li>
+              <li>WhatsApp Link: {props.waLink}</li>
+            </ul>
+            <div className="buttons">
+        <button className="edits"
+          onClick={() => {
+            if (window.confirm("Are you sure you want to delete") === true) {
+              props.deletePost(props._id, props.cardId);
+            }
+          }}
+        >
+          Delete Post
+          </button>
+        <button className="edits" onClick={editButtonHandler}>Edit Post</button>
+        <button className="edits" onClick={downloadButtonHandler}>Download Registrants</button>
+        </div>
+          </div>
+        </div>
+        
+      </div>
     </div>
   );
 };

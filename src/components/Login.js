@@ -2,6 +2,7 @@ import axios from "axios";
 import { redirect, useNavigate } from "react-router-dom";
 import { GoogleLogin, GoogleOAuthProvider } from "@react-oauth/google";
 import { useEffect } from "react";
+import './Login.css';
 
 // import { ToastContainer, toast } from "react-toastify";
 
@@ -66,14 +67,17 @@ const Login = () => {
   }, []);
 
   return (
-    <div>
-      <h1>Welcome To IG Forum Organization Panel</h1>
-      <br></br>
-      <p> Sign In</p>
+    <>
+      <h1 className="heading" >Welcome To IG Forum Organization Panel</h1>
+      <div className="box">
+      <p className="text"> Sign In</p>
+      <div className="signin">
       <GoogleOAuthProvider clientId="686237414426-i403mqs4n53kj8n3e7m59nobp91dks41.apps.googleusercontent.com">
         <GoogleLogin onSuccess={onSuccess} onError={onError} />
       </GoogleOAuthProvider>
-    </div>
+      </div>
+      </div>
+    </>
   );
 };
 

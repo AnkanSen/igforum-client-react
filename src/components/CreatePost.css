@@ -1,0 +1,144 @@
+@import url('https://fonts.googleapis.com/css?family=Open+Sans&display=swap');
+
+.createPostDiv{
+    background-color: #AED3D4;
+    width:700px;
+    margin:0 auto;
+    margin-top:20px;
+    border-radius: 10px;
+  }
+
+
+  .title-form{
+    background-color: #5DAAA7;
+    padding:20px;
+    border-radius: 10px 10px 0 0; 
+    color:white;
+    word-spacing: 5px;
+    letter-spacing: 2px;
+  }
+
+  .createPostForm{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    grid-template-rows:repeat(5,1fr);
+    padding: 30px 10px 30px 10px;
+  }
+
+  .field{
+    display:flex;
+  padding:15px;
+  }
+
+  .add{
+    padding: 0 20px;
+  border:none;
+  border-radius:5px;
+  background-color: #5DAAA7;
+  color:white;
+  letter-spacing: 2px;
+  }
+
+  label{
+    font-weight: 600;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  }
+
+  .subtn{
+    background-color: #4CAF50;
+  border: none;
+  color: white;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  }
+
+  @media (max-width:500px){
+    .createPostDiv{
+        background-color: #AED3D4;
+      width:100vw;
+      margin: auto;
+      border-radius: 10px;
+      }
+    
+    
+      .title-form{
+        background-color: #5DAAA7;
+      padding:10px 30px;
+      border-radius:10px 10px 0 0; 
+      color:white;
+      word-spacing: 5px;
+      letter-spacing: 2px;
+      }
+    
+      .createPostForm{
+        display:grid;
+      grid-template-columns:1fr;
+      grid-template-rows:auto;
+      padding: 25px 10px 20px 10px;
+      }
+    
+      .field{
+        display:flex;
+      padding:15px;
+      }
+    
+      .add{
+        margin-top:10px;
+        padding: 10px 20px;
+        border:none;
+        border-radius:5px;
+        background-color: #5DAAA7;
+        color:white;
+        letter-spacing: 2px;
+      }
+    
+      label{
+        font-weight: 600;
+        font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+      }
+  }
+
+  @media (max-width:440px){
+    .createPostDiv{
+        background-color: #AED3D4;
+      width:100vw;
+      margin:0 auto;
+      border-radius:0;
+      }
+    
+    
+      .title-form{
+        background-color: #5DAAA7;
+      padding:10px 30px;
+      border-radius: 0; 
+      color:white;
+      word-spacing: 5px;
+      letter-spacing: 2px;
+      }
+    
+      .createPostForm{
+        display:grid;
+      grid-template-columns:1fr;
+      grid-template-rows:auto;
+      padding: 25px 10px 20px 10px;
+      }
+    
+      .field{
+        display:flex;
+      }
+    
+      .add{
+        padding: 10px 20px;
+      border:none;
+      border-radius:5px;
+      background-color: #5DAAA7;
+      color:white;
+      letter-spacing: 2px;
+      }
+    
+      label{
+        font-weight: 600;
+      }
+  }

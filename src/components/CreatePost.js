@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 import Navbar from "../components/Navbar";
-
+import "./CreatePost.css";
 const CreatePost = () => {
   const navigate = useNavigate();
 
@@ -86,14 +86,15 @@ const CreatePost = () => {
     <>
       <Navbar />
       <div className="createPostDiv">
+        <div class="title-form">
+          <h1>Create a new Event</h1>
+        </div>
         <form
           className="createPostForm"
           encType="multipart/form-data"
           method="post"
           onSubmit={handleSubmit}
         >
-          <h1>Create a new Event</h1>
-          <br />
           <div className="field">
             <label>Title: </label>
             <input
@@ -109,8 +110,6 @@ const CreatePost = () => {
             <textarea
               id="body"
               name="body"
-              rows="4"
-              cols="50"
               onChange={handleChange}
             ></textarea>
           </div>
@@ -165,7 +164,7 @@ const CreatePost = () => {
             />
           </div>
           <div className="field">
-            <input type="submit" name="submit" />
+            <input className="subtn" type="submit" name="submit" />
           </div>
         </form>
       </div>

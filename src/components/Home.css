@@ -1,0 +1,140 @@
+body {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: #262626;
+    font-family: "poppins", sans-serif;
+  }
+
+
+.heading{
+    font-family:'Times New Roman', Times, serif;
+    color: rgb(150, 143, 47);
+    
+}
+
+.divCard{
+    width: 1200px;
+  min-height: 600px;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.postCard {
+    position: relative;
+    width: calc(50% - 20px);
+    min-height: 300px;
+    background: #fff;
+    margin: 10px;
+    box-sizing: border-box;
+  }
+
+  .postCard .imgBox {
+    position: absolute;
+    width: 50%;
+    height: 100%;
+  }
+  .postCard .imgBox img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .postCard .details {
+    position: absolute;
+    right: 0;
+    width: 50%;
+    height: 100%;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .postCard .details .content {
+    padding: 20px;
+    box-sizing: border-box;
+  }
+  .postCard .details .content h1 {
+    margin: 0;
+    padding: 0;
+    font-size: 24px;
+    line-height: 0.85em;
+    font-weight: 600;
+  }
+  .postCard .details .content h1 span {
+    font-size: 14px;
+    color: #777;
+  }
+
+  .postCard .details .content ul li {
+    list-style: none;
+    margin-left: 2px;
+    margin:10px;
+  }
+  .postCard .details .content ul li a {
+    color: #fff;
+    border: none;
+  }
+
+  .postCard .details .content a {
+    display: flex;
+    text-decoration: none;
+    padding: 5px 10px;
+    margin-top: 10px;
+    border: 2px solid #262626;
+    color: #262626;
+    font-weight: 500;
+  }
+
+  .postCard .details .content ul li a {
+    color: #fff;
+    border: none;
+  }
+.edits{
+  background-color: black;
+  color: #fff;
+  padding: 5px;
+  margin: 2px;
+  border-radius: 5px;
+}
+
+  @media (max-width: 1200px) {
+    .divCard {
+      width: 100%;
+    }
+  }
+  @media (max-width: 991px) {
+    .postCard {
+      width: calc(70% - 20px);
+      margin: 10px auto;
+    }
+  }
+  @media (max-width: 768px) {
+    .postCard {
+      width: calc(70% - 20px);
+      margin: 10px auto;
+    }
+    .postCard .imgBox {
+      position: relative;
+      width: 100%;
+      height: 200px;
+    }
+    .postCard .details {
+      position: relative;
+      width: 100%;
+      height: 200px;
+    }
+  }
+  @media (max-width: 480px) {
+    .postCard {
+      width: calc(100% - 40px);
+      margin: 10px auto;
+    }
+  }
+  

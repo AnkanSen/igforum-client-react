@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router-dom";
+import "./Navbar.css";
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -10,11 +11,19 @@ const Navbar = () => {
   const createPostHandler = () => {
     navigate("/post");
   };
+
   return (
     <>
-      <button onClick={logoutHandler}>Logout</button>
-      <br></br>
-      <button onClick={createPostHandler}>Create New Event</button>
+      <div class="nav">
+        <ul className="dict">
+          <li className="dict">
+            <a onClick={logoutHandler}>Logout</a>
+          </li>
+          <li className="dict">
+            <a onClick={createPostHandler}>Create New Event</a>
+          </li>
+        </ul>
+      </div>
     </>
   );
 };
